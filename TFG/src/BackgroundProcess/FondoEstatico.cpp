@@ -37,9 +37,11 @@ void FondoEstatico::process(cv::Mat& input, cv::Mat& output){
 	cv::cvtColor(input, input, CV_BGR2GRAY);
 	cv::absdiff(input, this->previousFrame, differnce);
 
-	float threshold = 30.0f;
-
-	cv::threshold(differnce, output, threshold, 255, cv::THRESH_BINARY);
+	cv::threshold(differnce, output, this->threshold, 255, cv::THRESH_BINARY);
 
 
+}
+
+void FondoEstatico::setThreshold(float threshold){
+	this->threshold = threshold;
 }

@@ -33,10 +33,12 @@
 class FondoEstatico: public FrameProcessor {
 private:
 	cv::Mat previousFrame;
+	float threshold;
 public:
 	FondoEstatico();
 	~FondoEstatico();
 	void process(cv::Mat &input, cv::Mat &output);
+	void setThreshold(float threshold);
 };
 
 #endif /* ALLFRAMES_H_ */

@@ -98,7 +98,6 @@ void VideoProcessor::run(){
 
 	cv::Mat frame;
 	cv::Mat output;
-	//cv::Mat old;
 
 	if(!isOpened()){
 		return ;
@@ -108,10 +107,6 @@ void VideoProcessor::run(){
 
 	while(!isStopped()){
 
-		/**
-		if(!frame.empty()){
-			old = frame.clone();
-		}**/
 		if(!readNextFrame(frame)){
 			break;
 		}

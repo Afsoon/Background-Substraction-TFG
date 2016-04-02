@@ -41,3 +41,7 @@ void FramesContinuos::process(cv::Mat& input, cv::Mat& output){
 	cv::threshold(differnce, output, threshold, 255, cv::THRESH_BINARY);
 
 }
+
+void FramesContinuos::setThreshold(float threshold){
+	this->threshold = threshold;
+}

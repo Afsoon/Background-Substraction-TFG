@@ -28,10 +28,12 @@
 class FramesContinuos: public FrameProcessor {
 private:
 	cv::Mat previousFrame;
+	float threshold;
 public:
 	FramesContinuos();
 	~FramesContinuos();
 	void process(cv::Mat &input, cv::Mat &output);
+	void setThreshold(float threshold);
 };
 
 #endif /* BACKGROUNDPROCESS_FRAMESCONTINUOS_H_ */
