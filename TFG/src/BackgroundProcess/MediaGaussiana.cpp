@@ -8,12 +8,10 @@
 #include "MediaGaussiana.h"
 
 MediaGaussiana::MediaGaussiana() {
-	// TODO Auto-generated constructor stub
 
 }
 
 MediaGaussiana::~MediaGaussiana() {
-	// TODO Auto-generated destructor stub
 }
 
 /**
