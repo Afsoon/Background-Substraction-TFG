@@ -44,7 +44,7 @@ int main() {
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&kGaussian);
+	videoProcessor.setFrameProcessor(&mediamovil);
 	videoProcessor.run();
 	return 0;
 }
@@ -71,6 +71,7 @@ void mediaGaussiana(MediaGaussiana &media){
 void mediaMovil(MediaMovil &mediamovil){
 	mediamovil.setLearning_rate(0.05);
 	mediamovil.setThresold(30.0f);
+	mediamovil.setPixelSelection(false);
 }
 
 void mediaMovilSeleccion(MediaMovilSeleccion &media){

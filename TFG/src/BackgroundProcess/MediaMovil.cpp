@@ -30,6 +30,9 @@ void MediaMovil::setLearning_rate(double learning){
 	this->learningRate = learning;
 }
 
+void MediaMovil::setPixelSelection(bool pixelSelection){
+	this->pixelSelection = pixelSelection;
+}
 
 /**
  * En el estado inicial, copiamos los valores actuales, en escala de grises, de cada píxel e inicializamos el modelo de fondo.
@@ -45,6 +48,14 @@ void MediaMovil::setLearning_rate(double learning){
  * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
  */
 void MediaMovil::process(cv::Mat& input, cv::Mat& output){
+	if(this->pixelSelection){
+		processWithSelectionPixel(input, output);
+	}else{
+		processWithoutSelectionPixel(input, output);
+	}
+}
+
+void MediaMovil::processWithoutSelectionPixel(cv::Mat& input, cv::Mat& output){
 	cv::Mat gray;
 	cv::Mat backImage;
 	cv::Mat foreground;
@@ -73,4 +84,39 @@ void MediaMovil::process(cv::Mat& input, cv::Mat& output){
 		this->oldFrame = gray.clone();
 	}
 
+}
+
+void MediaMovil::processWithSelectionPixel(cv::Mat& input, cv::Mat& output){
+	cv::Mat gray;
+	cv::Mat backImage;
+	cv::Mat foreground;
+
+	cv::cvtColor(input, gray, CV_BGR2GRAY);
+	if(this->backgroundModel.empty()){
+		gray.convertTo(this->backgroundModel, CV_32F, 1./255.);
+	}
+	bool clone = false;
+	if(this->oldFrame.empty()){
+		this->oldFrame = gray.clone();
+		clone = true;
+	}
+
+	if(!clone){
+		cv::accumulateWeighted(this->oldFrame, this->backgroundModel, this->learningRate, this->maskBackground);
+	}
+
+	this->backgroundModel.convertTo(backImage, CV_8U);
+
+	cv::absdiff(backImage, gray, foreground);
+
+	cv::threshold(foreground, output, threshold, 255, cv::THRESH_BINARY);
+
+	if(clone){
+		cv::threshold(foreground, this->maskBackground, threshold, 255, cv::THRESH_BINARY);
+	}
+
+	if(!clone){
+		this->oldFrame = gray.clone();
+		cv::threshold(this->oldFrame, this->maskBackground, threshold, 255, cv::THRESH_BINARY);
+	}
 }

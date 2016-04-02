@@ -29,15 +29,20 @@
 class MediaMovil: public FrameProcessor {
 private:
 	cv::Mat backgroundModel;
+	cv::Mat maskBackground;
 	cv::Mat oldFrame;
 	double threshold;
 	float learningRate;
+	bool pixelSelection = true;
 public:
 	MediaMovil();
 	~MediaMovil();
 	void setThresold(float threshold);
 	void setLearning_rate(double learning_rate);
 	void process(cv::Mat& input, cv::Mat& output);
+	void processWithoutSelectionPixel(cv::Mat& input, cv::Mat& output);
+	void processWithSelectionPixel(cv::Mat& input, cv::Mat& output);
+	void setPixelSelection(bool pixelSelection);
 };
 
 #endif /* BACKGROUNDPROCESS_MEDIAMOVIL_H_ */
