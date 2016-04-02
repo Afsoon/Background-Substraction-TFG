@@ -32,6 +32,7 @@ public:
 	void setKValue(double k_value);
 	void process(cv::Mat& input, cv::Mat& output);
 	void setSeleccionPixelesMode(bool state);
+	void actualizarPdfSeleccionPixeles(cv::Mat& model, cv::Mat& input, bool first);
 };
 
 #endif /* BACKGROUNDPROCESS_MEDIAGAUSSIANACOLOR_H_ */

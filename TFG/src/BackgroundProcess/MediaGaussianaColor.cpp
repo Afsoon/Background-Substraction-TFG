@@ -62,9 +62,46 @@ void MediaGaussianaColor::processMatrix(cv::Mat& input, cv::Mat& output){
 
 		if(!seleccion_pixeles){
 			model_pdf = learning_rate*input + (1-learning_rate)*model_pdf;
+		}else{
+			actualizarPdfSeleccionPixeles(mask_foreground, input, first_model);
 		}
 
 		output = mask_foreground;
+}
+
+void MediaGaussianaColor::actualizarPdfSeleccionPixeles(cv::Mat& model, cv::Mat& input, bool first){
+	int channels = input.channels();
+	int cols  = input.cols * channels;
+	int rows = input.rows;
+
+	if(input.isContinuous()){
+		cols *= rows;
+		rows = 1;
+		input_contiua = true;
+	}
+
+	uchar* pdf;
+	uchar* mask;
+	uchar* input_;
+	for(int i = 0; i < rows; ++i){
+		input_ = input.ptr<uchar>(i);
+		mask = mask_foreground.ptr<uchar>(i);
+		pdf = model_pdf.ptr<uchar>(i);
+		for(int j = 0; j < cols; ++j){
+			int indice = calcularIndice(rows,i,j);
+			if(first){
+				int valor = 0;
+				if(mask[indice] == 255){
+					valor = 1;
+				}
+				pdf[indice] = valor*pdf[indice]+(1-valor)*(learning_rate*input_[indice] + (1 - learning_rate)*pdf[indice]);
+			}else{
+				if(mask[indice] != 255){
+					pdf[indice] = learning_rate*input_[indice] + (1 - learning_rate)*pdf[indice];
+				}
+			}
+		}
+	}
 }
 
 void MediaGaussianaColor::crearMascara(cv::Mat& desv, cv::Mat& diff, cv::Mat& input){

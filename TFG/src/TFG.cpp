@@ -40,7 +40,7 @@ int main() {
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&kGaussian);
+	videoProcessor.setFrameProcessor(&gauss);
 	videoProcessor.run();
 	return 0;
 }
@@ -54,14 +54,15 @@ void kGassuians(KGaussians &kGaussian){
 
 void mediaGaussianaColor(MediaGaussianaColor &media){
 	media.setKValue(2.5);
-	media.setSeleccionPixelesMode(false);
-	media.setLearning_rate(0.5);
+	media.setSeleccionPixelesMode(true);
+	media.setLearning_rate(0.05);
 }
 
 void mediaGaussiana(MediaGaussiana &media){
 	media.setKValue(2.5);
-	media.setSeleccionPixelesMode(false);
-	media.setLearning_rate(0.5);
+	media.setSeleccionPixelesMode(true);
+	media.setLearning_rate(0.05);
+	media.setProcessColorVideo(true);
 }
 
 void mediaMovil(MediaMovil &mediamovil){

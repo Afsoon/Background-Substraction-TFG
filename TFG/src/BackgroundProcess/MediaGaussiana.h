@@ -42,17 +42,20 @@
  */
 class MediaGaussiana: public FrameProcessor {
 private:
-	cv::Mat desviacion_tipica;
-	cv::Mat model_pdf;
-	cv::Mat mask_foreground;
+	cv::Mat desviacionTipica;
+	cv::Mat modelPdf;
+	cv::Mat maskForeground;
 	cv::Mat oldFrame;
 	double k;
-	double learning_rate;
-	void processMatrix(cv::Mat& input, cv::Mat& output);
+	double learningRate;
+	void processGrayImages(cv::Mat& input, cv::Mat& output);
+	void processColorImages(cv::Mat& input, cv::Mat& output);
 	void actualizarPdfSeleccionPixeles(cv::Mat& mask, cv::Mat& input, bool first);
 	int calcularIndice(int filas, int i, int j);
-	bool input_contiua;
-	bool seleccion_pixeles;
+	void crearMascara(cv::Mat& desv, cv::Mat& diff, cv::Mat& input);
+	bool inputContinua;
+	bool seleccionPixeles;
+	bool processColorVideo = true;
 public:
 	MediaGaussiana();
 	~MediaGaussiana();
@@ -60,6 +63,8 @@ public:
 	void setKValue(double k_value);
 	void process(cv::Mat& input, cv::Mat& output);
 	void setSeleccionPixelesMode(bool state);
+	void setProcessColorVideo(bool processColorVideo);
+
 };
 
 #endif /* BACKGROUNDPROCESS_MEDIAGAUSSIANA_H_ */
