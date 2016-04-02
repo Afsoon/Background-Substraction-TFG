@@ -44,7 +44,7 @@ int main() {
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&mediamovil);
+	videoProcessor.setFrameProcessor(&all);
 	videoProcessor.run();
 	return 0;
 }

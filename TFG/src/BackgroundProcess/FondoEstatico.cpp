@@ -29,13 +29,17 @@ FondoEstatico::~FondoEstatico() {
 void FondoEstatico::process(cv::Mat& input, cv::Mat& output){
 	if(output.empty()){
 		output = cv::Mat::zeros(input.rows, input.cols, CV_8UC1);
+		cv::cvtColor(input, this->previousFrame, CV_BGR2GRAY);
 		return;
 	}
+
 	cv::Mat differnce;
-	cv::Mat foregroundMask = cv::Mat::zeros(input.rows, input.cols, CV_8UC1);
-	cv::absdiff(input, output, differnce);
+	cv::cvtColor(input, input, CV_BGR2GRAY);
+	cv::absdiff(input, this->previousFrame, differnce);
 
 	float threshold = 30.0f;
+
+	cv::threshold(differnce, output, threshold, 255, cv::THRESH_BINARY);
 
 
 }

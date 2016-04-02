@@ -26,6 +26,8 @@
  * - El valor elegido para el umbral
  */
 class FramesContinuos: public FrameProcessor {
+private:
+	cv::Mat previousFrame;
 public:
 	FramesContinuos();
 	~FramesContinuos();

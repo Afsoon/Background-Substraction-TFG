@@ -31,6 +31,8 @@
  * Las condiciones de la escena que se esta tratando.
  */
 class FondoEstatico: public FrameProcessor {
+private:
+	cv::Mat previousFrame;
 public:
 	FondoEstatico();
 	~FondoEstatico();
