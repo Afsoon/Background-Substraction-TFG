@@ -11,7 +11,6 @@
 #include "BackgroundProcess/FondoEstatico.h"
 #include "BackgroundProcess/FramesContinuos.h"
 #include "BackgroundProcess/MediaMovil.h"
-#include "BackgroundProcess/MediaMovilSeleccion.h"
 #include "BackgroundProcess/MediaGaussiana.h"
 #include "BackgroundProcess/MediaGaussianaColor.h"
 #include "BackgroundProcess/KGaussians.h"
@@ -22,7 +21,6 @@ using namespace std;
 
 void mediaGaussiana(MediaGaussiana &media);
 void mediaMovil(MediaMovil &mediamovil);
-void mediaMovilSeleccion(MediaMovilSeleccion &media);
 void mediaGaussianaColor(MediaGaussianaColor &media);
 void kGassuians(KGaussians &kGaussian);
 
@@ -31,20 +29,18 @@ int main() {
 	FramesContinuos framesContinuos;
 	FondoEstatico fondoEstatico;
 	MediaMovil mediamovil;
-	MediaMovilSeleccion media;
 	MediaGaussiana gauss;
 	MediaGaussianaColor gaussColor;
 	KGaussians kGaussian;
 	mediaGaussiana(gauss);
 	mediaMovil(mediamovil);
-	mediaMovilSeleccion(media);
 	mediaGaussianaColor(gaussColor);
 	kGassuians(kGaussian);
 	videoProcessor.setInput(VIDEO2);
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&mediamovil);
+	videoProcessor.setFrameProcessor(&kGaussian);
 	videoProcessor.run();
 	return 0;
 }
@@ -74,7 +70,3 @@ void mediaMovil(MediaMovil &mediamovil){
 	mediamovil.setPixelSelection(false);
 }
 
-void mediaMovilSeleccion(MediaMovilSeleccion &media){
-	media.setLearning_rate(0.05);
-	media.setThresold(30.0f);
-}
