@@ -12,7 +12,6 @@
 #include "BackgroundProcess/FramesContinuos.h"
 #include "BackgroundProcess/MediaMovil.h"
 #include "BackgroundProcess/MediaGaussiana.h"
-#include "BackgroundProcess/MediaGaussianaColor.h"
 #include "BackgroundProcess/KGaussians.h"
 #define VIDEO "videos/1.mp4"
 #define VIDEO2 "videos/2.mp4"
@@ -21,7 +20,6 @@ using namespace std;
 
 void mediaGaussiana(MediaGaussiana &media);
 void mediaMovil(MediaMovil &mediamovil);
-void mediaGaussianaColor(MediaGaussianaColor &media);
 void kGassuians(KGaussians &kGaussian);
 
 int main() {
@@ -30,11 +28,9 @@ int main() {
 	FondoEstatico fondoEstatico;
 	MediaMovil mediamovil;
 	MediaGaussiana gauss;
-	MediaGaussianaColor gaussColor;
 	KGaussians kGaussian;
 	mediaGaussiana(gauss);
 	mediaMovil(mediamovil);
-	mediaGaussianaColor(gaussColor);
 	kGassuians(kGaussian);
 	videoProcessor.setInput(VIDEO2);
 	videoProcessor.displayInput("Input");
@@ -52,11 +48,6 @@ void kGassuians(KGaussians &kGaussian){
 	kGaussian.setTValue(0.9);
 }
 
-void mediaGaussianaColor(MediaGaussianaColor &media){
-	media.setKValue(2.5);
-	media.setSeleccionPixelesMode(true);
-	media.setLearning_rate(0.05);
-}
 
 void mediaGaussiana(MediaGaussiana &media){
 	media.setKValue(2.5);
