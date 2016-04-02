@@ -28,8 +28,8 @@ void kGassuians(KGaussians &kGaussian);
 
 int main() {
  	vp::VideoProcessor videoProcessor;
-	FramesContinuos all;
-	FondoEstatico all1;
+	FramesContinuos framesContinuos;
+	FondoEstatico fondoEstatico;
 	MediaMovil mediamovil;
 	MediaMovilSeleccion media;
 	MediaGaussiana gauss;
@@ -44,7 +44,7 @@ int main() {
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&all);
+	videoProcessor.setFrameProcessor(&framesContinuos);
 	videoProcessor.run();
 	return 0;
 }
