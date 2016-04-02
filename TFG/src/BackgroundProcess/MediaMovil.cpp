@@ -20,14 +20,14 @@ MediaMovil::~MediaMovil() {
  * @param thresold un valor comprendido entre 0 y 255
  */
 void MediaMovil::setThresold(float thresold){
-	threshold = thresold;
+	this->threshold = thresold;
 }
 /**
  * Recibe el factor de aprendizaje que queremos aplicar durante el proceso
  * @param learning un valor comprendido entre 0-1.
  */
 void MediaMovil::setLearning_rate(double learning){
-	learning_rate = learning;
+	this->learningRate = learning;
 }
 
 
@@ -55,22 +55,22 @@ void MediaMovil::process(cv::Mat& input, cv::Mat& output){
 	}
 
 	bool clone = false;
-	if(old_frame.empty()){
-		old_frame = gray.clone();
+	if(this->oldFrame.empty()){
+		this->oldFrame = gray.clone();
 		clone = true;
 	}
 
-	background_model.convertTo(backImage, CV_8U);
+	this->backgroundModel.convertTo(backImage, CV_8U);
 
 	cv::absdiff(backImage, gray, foreground);
 
-	cv::threshold(foreground, output, threshold, 255, cv::THRESH_BINARY);
+	cv::threshold(foreground, output, this->threshold, 255, cv::THRESH_BINARY);
 
-	cv::accumulateWeighted(old_frame, background_model, learning_rate);
+	cv::accumulateWeighted(this->oldFrame, this->backgroundModel, this->learningRate);
 	if(clone){
 		clone = false;
 	}else{
-		old_frame = gray.clone();
+		this->oldFrame = gray.clone();
 	}
 
 }

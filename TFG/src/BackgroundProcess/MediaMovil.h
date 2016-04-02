@@ -28,10 +28,10 @@
  *  */
 class MediaMovil: public FrameProcessor {
 private:
-	cv::Mat background_model;
-	cv::Mat old_frame;
+	cv::Mat backgroundModel;
+	cv::Mat oldFrame;
 	double threshold;
-	float learning_rate;
+	float learningRate;
 public:
 	MediaMovil();
 	~MediaMovil();
