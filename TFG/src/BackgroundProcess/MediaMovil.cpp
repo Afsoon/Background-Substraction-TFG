@@ -50,8 +50,8 @@ void MediaMovil::process(cv::Mat& input, cv::Mat& output){
 	cv::Mat foreground;
 
 	cv::cvtColor(input, gray, CV_BGR2GRAY);
-	if(background_model.empty()){
-		gray.convertTo(background_model, CV_32F,  1./255.);
+	if(this->backgroundModel.empty()){
+		gray.convertTo(this->backgroundModel, CV_32F,  1./255.);
 	}
 
 	bool clone = false;

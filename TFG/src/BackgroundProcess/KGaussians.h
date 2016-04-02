@@ -10,6 +10,11 @@
 
 #include "FrameProcessor.h"
 
+/**
+ * Estructura de datos que usamos para mantener los valores de cada gaussiana
+ * asociada a un pixel. Guardamos su varianza, los valores RGB, su peso y su
+ * significante, más adelante se sabrá para que es.
+ */
 typedef struct KGaussian{
 	float variance;
 	float muR;
@@ -19,6 +24,46 @@ typedef struct KGaussian{
 	float significants;
 }KGM;
 
+/**
+ * La técnica que ha sido aplicada para obtener la máscara del plano ha sido el modelo de
+ * mezcla de K gaussianas.
+ *
+ * Este modelo se basa en la probabilidad de un píxel pertezca al proceso de fondo basado en
+ * su serie temporal de valores que toma a lo larto de un tiempo t.
+ *
+ * Por cada píxel tiene asociada un número máximo de gaussianas, este valor esta comprendido entre [3-5].
+ * El píxel se considera que ha habido una coincidencia cuando el valor del píxel tiene una desviación
+ * para una distribución menor que 2.5 su desviación estándar.
+ *
+ * En el caso de no producir una coincidencia, se añade una gaussiana o se sustituye la distribución
+ * menos probable con las siguientes características:
+ *  - Con el valor actual como su valor medio
+ *  - una varianza inicial alta
+ *  - un peso bajo
+ *
+ * El proceso de actualización de las gaussianas es el siguiente:
+ *
+ * Si se ha producido una coincidencia, la varianza, media y peso se actualiza de la siguiente forma:
+ *
+ * <<Insertar fórmulas matemáticas>>
+ * Peso:
+ *
+ * Media:
+ *
+ * Varianza:
+ *
+ * <rho>:
+ *
+ * Si es una gaussiana que no ha producido coincidencia o ya ha habido una, solo se actualiza su peso:
+ *
+ * Tras la actualización, comprobación de si ha habido una coincidencia, y su ordenación, se estima
+ * el modelo de fondo mediante la siguienet fórmula:
+ *
+ * <<Formula>>
+ *
+ * Si T es grande, entonces el modelo de fondo será multimodal.
+ * Si T es pequeña, entonces el modelo de fondo sera unimodal.
+ */
 class KGaussians: public FrameProcessor {
 private:
 	bool initialized;
