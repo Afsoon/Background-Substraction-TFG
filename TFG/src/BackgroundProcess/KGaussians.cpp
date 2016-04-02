@@ -102,9 +102,9 @@ void KGaussians::fillEmptyModel(int pos){
  * Esta gaussiana si que se usará para el modelo.
  * */
 void KGaussians::fillNewModel(int pos, const cv::Vec3b& pixel){
-	this->m_modes[pos].muB = pixel[2];
+	this->m_modes[pos].muB = pixel[0];
 	this->m_modes[pos].muG = pixel[1];
-	this->m_modes[pos].muR = pixel[0];
+	this->m_modes[pos].muR = pixel[2];
 	this->m_modes[pos].significants = 0;
 	this->m_modes[pos].variance = this->m_variance;
 	this->m_modes[pos].weight = 1;
@@ -115,9 +115,9 @@ void KGaussians::fillNewModel(int pos, const cv::Vec3b& pixel){
  * permite indicar con que peso debe empezar la nueva gaussiana.
  * */
 void KGaussians::fillNewModelLowWeigth(int pos, const cv::Vec3b& pixel, float weight){
-	this->m_modes[pos].muB = pixel[2];
+	this->m_modes[pos].muB = pixel[0];
 	this->m_modes[pos].muG = pixel[1];
-	this->m_modes[pos].muR = pixel[0];
+	this->m_modes[pos].muR = pixel[2];
 	this->m_modes[pos].significants = 0;
 	this->m_modes[pos].variance = this->m_variance;
 	this->m_modes[pos].weight = weight;
@@ -146,9 +146,9 @@ float KGaussians::getValuePixel(const cv::Vec3b& pixel, int pos){
 	float muG = this->m_modes[pos].muG;
 	float muB = this->m_modes[pos].muB;
 
-	float dR = muR - pixel[0];
+	float dR = muR - pixel[2];
 	float dG = muG - pixel[1];
-	float dB = muB - pixel[2];
+	float dB = muB - pixel[0];
 	return std::sqrt(dR*dR + dG*dG + dB*dB);
 }
 
@@ -157,17 +157,17 @@ float KGaussians::getValuePixel(const cv::Vec3b& pixel, int pos){
  * */
 void KGaussians::updateModelCoincidence(int pos, const cv::Vec3b& pixel, float intensity){
 	this->m_modes[pos].weight = (1 - this->alpha)*this->m_modes[pos].weight + this->alpha;
-	float rho = 0.05; /**cambiarlo por la formula buena**/
-	//float rho = m_params.Alpha()*exp(dist/(-2*var_m))/(pow(2*M_PI,3/2)*std::sqrt(var_m)); // 3 - no of channels
-	this->m_modes[pos].muR = (1-rho)*this->m_modes[pos].muR + rho*pixel[0];
+
+	float rho = this->alpha*std::exp(std::pow(intensity, 2.0)/(-2*this->m_modes[pos].variance))/(pow(2*M_PI,3/2)*std::sqrt(this->m_modes[pos].variance)); // 3 - no of channels
+	this->m_modes[pos].muR = (1-rho)*this->m_modes[pos].muR + rho*pixel[2];
 	this->m_modes[pos].muG = (1-rho)*this->m_modes[pos].muG + rho*pixel[1];
-	this->m_modes[pos].muB = (1-rho)*this->m_modes[pos].muB + rho*pixel[2];
-	this->m_modes[pos].variance = (1-rho)*this->m_modes[pos].variance + rho*intensity;
+	this->m_modes[pos].muB = (1-rho)*this->m_modes[pos].muB + rho*pixel[0];
+	this->m_modes[pos].variance = (1-rho)*this->m_modes[pos].variance + rho*std::pow(intensity, 2.0);
 	this->m_modes[pos].significants = this->m_modes[pos].weight/ std::sqrt(this->m_modes[pos].variance);
 }
 
 /**
- * Se enarga de actualizar los valores de las gaussianas que no ha producido coincidencia o
+ * Se encarga de actualizar los valores de las gaussianas que no ha producido coincidencia o
  * ya ha habido una coincidencia y se ha actualizado la gaussiana correspondiente
  * */
 void KGaussians::updateModelWithoutCoincidence(int pos){

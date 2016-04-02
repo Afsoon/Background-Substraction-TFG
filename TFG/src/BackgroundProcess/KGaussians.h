@@ -9,6 +9,8 @@
 #define BACKGROUNDPROCESS_KGAUSSIANS_H_
 
 #include "FrameProcessor.h"
+#include <imgproc/imgproc.hpp>
+#include <iostream>
 
 /**
  * Estructura de datos que usamos para mantener los valores de cada gaussiana
