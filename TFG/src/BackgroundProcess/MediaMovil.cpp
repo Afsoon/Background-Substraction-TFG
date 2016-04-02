@@ -32,21 +32,24 @@ void MediaMovil::setLearning_rate(double learning){
 
 
 /**
- * La técnica que ha sido aplicada para obtener la máscara del plano ha sido el modelo de fondo móvil.
- *
- * Este proceso se basa en la siguiente fórmula matemática:
- *
- * <<Insertar fórmula en Latex>>
- *
- * Por cada nuevo fotograma que se recibe, se procesa y se actualiza el modelo del fotograma anterior, excepto cuando
- * es el primer fotograma.
- *
+ * <--> Esto pertence al modelo de substracción continua de frames <!-->
  * Cuando estamos en el primer fotograma, la máscara que obtenemos es una totalmente negra, no ha habido diferencia,
  * pero al acabar de procesarla, nos evitamos volver a guardar la imagen.
  *
  * En el resto de fotogramas, hacemos siempre la comparación con el anterior y, como se ha dicho antes, se guardar
  * el fotograma, ya en escala de grises, para que cuando llegue el siguiente fotograma nos evitemos volver a pasarlo
  * a escala de grises y aumentar el coste computacional.
+ *
+ * <--> Implementacion del modelo de substracción de fondo de media móvil <!-->
+ *
+ * En el estado inicial, copiamos los valores actuales, en escala de grises, de cada píxel e inicializamos el modelo de fondo.
+ * El resultado de la primera pasada es una imagen totalmente negra.
+ *
+ * En las siguientes pasadas, se va procesando cada frame de entrada con el modelo de fondo. El proceso de actualización que se realiza
+ * es el indicado por el usuario. Si no ha indicado nada, por defecto se realiza una selección de píxeles.
+ *
+ * No se deja por defecto el proceso de actualización sin selección de píxeles ya que se contamina los valores del fondo
+ * con píxeles que pertenecen al primer plano.
  *
  * @param input Fotograma, del vídeo, que se va a manipular
  * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
