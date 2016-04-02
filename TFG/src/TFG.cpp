@@ -8,8 +8,8 @@
 
 #include <iostream>
 #include "VideoProcessor.h"
-#include "BackgroundProcess/SustractBackgroundProcess.h"
-#include "BackgroundProcess/AllFramesv2.h"
+#include "BackgroundProcess/FondoEstatico.h"
+#include "BackgroundProcess/FramesContinuos.h"
 #include "BackgroundProcess/MediaMovil.h"
 #include "BackgroundProcess/MediaMovilSeleccion.h"
 #include "BackgroundProcess/MediaGaussiana.h"
@@ -28,8 +28,8 @@ void kGassuians(KGaussians &kGaussian);
 
 int main() {
  	vp::VideoProcessor videoProcessor;
-	SustractBackgroundProcess sustract;
-	AllFramesv2 all;
+	FramesContinuos all;
+	FondoEstatico all1;
 	MediaMovil mediamovil;
 	MediaMovilSeleccion media;
 	MediaGaussiana gauss;
@@ -44,7 +44,7 @@ int main() {
 	videoProcessor.displayInput("Input");
 	videoProcessor.displayOutput("Output");
 	videoProcessor.setDelay(1000./videoProcessor.getFrameRate()); //Nunca puede ser 0 porque se congela la imagen
-	videoProcessor.setFrameProcessor(&kGaussian);
+	videoProcessor.setFrameProcessor(&mediamovil);
 	videoProcessor.run();
 	return 0;
 }

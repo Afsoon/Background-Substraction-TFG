@@ -1,12 +1,12 @@
 /*
- * AllFramesv2.h
+ * FramesContinuos.h
  *
  *  Created on: 19/9/2015
  *      Author: Said
  */
 
-#ifndef BACKGROUNDPROCESS_ALLFRAMESV2_H_
-#define BACKGROUNDPROCESS_ALLFRAMESV2_H_
+#ifndef BACKGROUNDPROCESS_FRAMESCONTINUOS_H_
+#define BACKGROUNDPROCESS_FRAMESCONTINUOS_H_
 #include <imgproc/imgproc.hpp>
 #include <iostream>
 #include "FrameProcessor.h"
@@ -30,11 +30,11 @@
  * La eleción del umbral: Un valor muy alto genera falsos-negativos pero uno muy bajo genera falsos-positivos
  * Las condiciones de la escena que se esta tratando.
  */
-class AllFramesv2: public FrameProcessor {
+class FramesContinuos: public FrameProcessor {
 public:
-	AllFramesv2();
-	~AllFramesv2();
+	FramesContinuos();
+	~FramesContinuos();
 	void process(cv::Mat &input, cv::Mat &output);
 };
 
-#endif /* BACKGROUNDPROCESS_ALLFRAMESV2_H_ */
+#endif /* BACKGROUNDPROCESS_FRAMESCONTINUOS_H_ */

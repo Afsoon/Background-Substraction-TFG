@@ -1,16 +1,16 @@
 /*
- * AllFramesv2.cpp
+ * FramesContinuos.cpp
  *
  *  Created on: 19/9/2015
  *      Author: Said
  */
 
-#include "AllFramesv2.h"
+#include "FramesContinuos.h"
 
-AllFramesv2::AllFramesv2() {
+FramesContinuos::FramesContinuos() {
 }
 
-AllFramesv2::~AllFramesv2() {
+FramesContinuos::~FramesContinuos() {
 }
 
 /**
@@ -23,7 +23,7 @@ AllFramesv2::~AllFramesv2() {
  * @param input Fotograma, del vídeo, que se va a manipular
  * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
  */
-void AllFramesv2::process(cv::Mat& input, cv::Mat& output){
+void FramesContinuos::process(cv::Mat& input, cv::Mat& output){
 	if(output.empty()){
 		output = cv::Mat::zeros(input.rows, input.cols, CV_8UC1);
 		cv::cvtColor(input, input, CV_BGR2GRAY);
@@ -36,10 +36,6 @@ void AllFramesv2::process(cv::Mat& input, cv::Mat& output){
 
 	float threshold = 30.0f;
 
-	const int64 start = cv::getTickCount();
-
 	cv::threshold(differnce, output, threshold, 255, cv::THRESH_BINARY_INV);
 
-	double duration = (cv::getTickCount()-start)/cv::getTickFrequency();
-	std::cout << duration << std::endl;
 }

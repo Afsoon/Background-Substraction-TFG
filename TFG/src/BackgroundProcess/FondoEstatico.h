@@ -1,5 +1,5 @@
 /*
- * AllFrames.h
+ * FondoEstatico.h
  *
  *  Created on: 17/9/2015
  *      Author: Said
@@ -12,10 +12,10 @@
 #include "FrameProcessor.h"
 
 
-class AllFrames: public FrameProcessor {
+class FondoEstatico: public FrameProcessor {
 public:
-	AllFrames();
-	~AllFrames();
+	FondoEstatico();
+	~FondoEstatico();
 	void process(cv::Mat &input, cv::Mat &output);
 };
 
