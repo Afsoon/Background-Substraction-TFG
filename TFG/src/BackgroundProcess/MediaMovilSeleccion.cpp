@@ -16,14 +16,32 @@ MediaMovilSeleccion::~MediaMovilSeleccion() {
 	// TODO Auto-generated destructor stub
 }
 
+
+/**
+ * Recibe el factor de aprendizaje que queremos aplicar durante el proceso
+ * @param learning un valor comprendido entre 0-1.
+ */
 void MediaMovilSeleccion::setLearning_rate(double learning){
 	learning_rate = learning;
 }
 
+/**
+ * Recibe el umbral que queremos que se aplique durante el proceso
+ * @param thresold un valor comprendido entre 0 y 255
+ */
 void MediaMovilSeleccion::setThresold(float thresold){
 	threshold = thresold;
 }
 
+/**
+ * Es la misma técnica mencionada anteriormente pero en este caso se le añade una selección de píxeles
+ *
+ * Solo se actualizan los píxeles asociadas al primer plano, es decir, si el píxel calculado no pertenece
+ * al primer plano, este se descarta de la actualización y no varía su valor.
+ *
+ * @param input Fotograma, del vídeo, que se va a manipular
+ * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
+ */
 void MediaMovilSeleccion::process(cv::Mat& input, cv::Mat& output){
 	cv::Mat gray;
 	cv::Mat backImage;

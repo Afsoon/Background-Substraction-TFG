@@ -15,7 +15,12 @@ MediaGaussianaColor::MediaGaussianaColor() {
 MediaGaussianaColor::~MediaGaussianaColor() {
 	// TODO Auto-generated destructor stub
 }
-
+/**
+ * Se esta implementando el mismo modelo anterior pero en este caso nos ahorramos el tener que convertir la imagen en escala de grises
+ *
+ * @param input Fotograma, del vídeo, que se va a manipular
+ * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
+ */
 void MediaGaussianaColor::process(cv::Mat& input, cv::Mat& output){
 	processMatrix(input, output);
 }
@@ -73,36 +78,50 @@ void MediaGaussianaColor::crearMascara(cv::Mat& desv, cv::Mat& diff, cv::Mat& in
 		input_contiua = true;
 	}
 
-		uchar* input_;
-		uchar* model;
-		uchar* desviacion;
-		uchar* mask;
+	uchar* input_;
+	uchar* model;
+	uchar* desviacion;
+	uchar* mask;
 
-		for(int i = 0; i < rows; ++i){
-			input_ = input.ptr<uchar>(i);
-			model = diff.ptr<uchar>(i);
-			desviacion = desv.ptr<uchar>(i);
-			mask = mask_foreground.ptr<uchar>(i);
-			for(int j = 0; j < cols; ++j){
-				int indice = calcularIndice(rows,i,j);
-				if(model[indice] > desviacion[indice] || model[indice +1] > desviacion[indice+1] || model[indice+2] > desviacion[indice+2]){
-					mask[indice/3] = 255;
-				}
-				j+=2;
-
+	for(int i = 0; i < rows; ++i){
+		input_ = input.ptr<uchar>(i);
+		model = diff.ptr<uchar>(i);
+		desviacion = desv.ptr<uchar>(i);
+		mask = mask_foreground.ptr<uchar>(i);
+		for(int j = 0; j < cols; ++j){
+			int indice = calcularIndice(rows,i,j);
+			if(model[indice] > desviacion[indice] || model[indice +1] > desviacion[indice+1] || model[indice+2] > desviacion[indice+2]){
+				mask[indice/3] = 255;
 			}
+			j+=2;
+
 		}
+	}
 }
 
+
+/**
+ * Asigamos el valor de K que queremos que se usa durante el proceso
+ * @param k_value
+ */
 void MediaGaussianaColor::setKValue(double k_value){
 	k = k_value;
 }
 
+
+/**
+ * Recibe el factor de aprendizaje que queremos aplicar durante el proceso
+ * @param learning un valor comprendido entre 0-1.
+ */
 void MediaGaussianaColor::setLearning_rate(double learning){
 	learning_rate = learning;
 }
 
 
+/**
+ * Indicamos si queremos que el PDF se actualice mendiante selección de pixeles o no.
+ * @param state true o false
+ */
 void MediaGaussianaColor::setSeleccionPixelesMode(bool state){
 	seleccion_pixeles = state;
 }

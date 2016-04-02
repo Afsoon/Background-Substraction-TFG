@@ -97,8 +97,8 @@ double VideoProcessor::getFrameRate(){
 void VideoProcessor::run(){
 
 	cv::Mat frame;
-	//cv::Mat output;
-	cv::Mat old;
+	cv::Mat output;
+	//cv::Mat old;
 
 	if(!isOpened()){
 		return ;
@@ -108,9 +108,10 @@ void VideoProcessor::run(){
 
 	while(!isStopped()){
 
+		/**
 		if(!frame.empty()){
 			old = frame.clone();
-		}
+		}**/
 		if(!readNextFrame(frame)){
 			break;
 		}
@@ -121,17 +122,17 @@ void VideoProcessor::run(){
 
 		if(callIt){
 			if(process){
-				process(frame, old);
+				process(frame, output);
 			}else if (frameProcesor){
-				frameProcesor->process(frame, old);
+				frameProcesor->process(frame, output);
 			}
 			fnumber++;
 		}else{
-			old = frame;
+			output = frame;
 		}
 
 		if(windowNameOutput.length() != 0){
-			cv::imshow(windowNameOutput, old);
+			cv::imshow(windowNameOutput, output);
 		}
 
 		if(delay >= 0 && cv::waitKey(delay) >= 0){

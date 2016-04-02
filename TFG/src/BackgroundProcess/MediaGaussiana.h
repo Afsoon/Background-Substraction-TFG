@@ -13,25 +13,19 @@
 class MediaGaussiana: public FrameProcessor {
 private:
 	cv::Mat desviacion_tipica;
-	cv::Mat media;
 	cv::Mat model_pdf;
 	cv::Mat mask_foreground;
 	cv::Mat oldFrame;
 	double k;
 	double learning_rate;
-	float threshold;
 	void processMatrix(cv::Mat& input, cv::Mat& output);
+	void actualizarPdfSeleccionPixeles(cv::Mat& mask, cv::Mat& input, bool first);
 	int calcularIndice(int filas, int i, int j);
-	void setDif(cv::Mat &diff, cv::Mat &input, cv::Mat &output, cv::Mat &desviacion);
-	bool desviacion_continua;
-	bool model_continua;
-	bool mask_continua;
 	bool input_contiua;
 	bool seleccion_pixeles;
 public:
 	MediaGaussiana();
 	~MediaGaussiana();
-	void setThresold(float threshold);
 	void setLearning_rate(double learning_rate);
 	void setKValue(double k_value);
 	void process(cv::Mat& input, cv::Mat& output);
