@@ -14,11 +14,12 @@ FramesContinuos::~FramesContinuos() {
 }
 
 /**
- * En el estado inicial, el algoritmo no tiene guardado el primer fotograma del vídeo. Al carecer del
- * primer fotograma, este se guarda y se devuelve una máscara negra, si se calculase se obtendría eso.
+ * Cuando estamos en el primer fotograma, la máscara que obtenemos es una totalmente negra, no ha habido diferencia,
+ * pero al acabar de procesarla, nos evitamos volver a guardar la imagen.
  *
- * En los estados consecutivos, se va comparando con el frame guardado y obtenemos la máscara de
- * primer plano asociada.
+ * En el resto de fotogramas, hacemos siempre la comparación con el anterior y, como se ha dicho antes, se guardar
+ * el fotograma, ya en escala de grises, para que cuando llegue el siguiente fotograma nos evitemos volver a pasarlo
+ * a escala de grises y aumentar el coste computacional.
  *
  * @param input Fotograma, del vídeo, que se va a manipular
  * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada

@@ -32,16 +32,6 @@ void MediaMovil::setLearning_rate(double learning){
 
 
 /**
- * <--> Esto pertence al modelo de substracción continua de frames <!-->
- * Cuando estamos en el primer fotograma, la máscara que obtenemos es una totalmente negra, no ha habido diferencia,
- * pero al acabar de procesarla, nos evitamos volver a guardar la imagen.
- *
- * En el resto de fotogramas, hacemos siempre la comparación con el anterior y, como se ha dicho antes, se guardar
- * el fotograma, ya en escala de grises, para que cuando llegue el siguiente fotograma nos evitemos volver a pasarlo
- * a escala de grises y aumentar el coste computacional.
- *
- * <--> Implementacion del modelo de substracción de fondo de media móvil <!-->
- *
  * En el estado inicial, copiamos los valores actuales, en escala de grises, de cada píxel e inicializamos el modelo de fondo.
  * El resultado de la primera pasada es una imagen totalmente negra.
  *
