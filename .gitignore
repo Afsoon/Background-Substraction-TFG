@@ -1,6 +1,4 @@
-./TFG/latex/*
+.cproject
 TFG.doxyfile
-./TFG/videos/*
-./TFG/videos/
-./TFG/latex/
-./TFG/.cpoject
+TFG/src/latex
+TFG/videos
