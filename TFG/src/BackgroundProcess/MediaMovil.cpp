@@ -55,6 +55,12 @@ void MediaMovil::process(cv::Mat& input, cv::Mat& output){
 	}
 }
 
+/**
+ * Se aplica el modelo de subtracción de fondo sin usar selección de píxeles para la actualización.
+ *
+ * @param input Fotograma, del vídeo, que se va a manipular
+ * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
+ */
 void MediaMovil::processWithoutSelectionPixel(cv::Mat& input, cv::Mat& output){
 	cv::Mat gray;
 	cv::Mat backImage;
@@ -86,6 +92,12 @@ void MediaMovil::processWithoutSelectionPixel(cv::Mat& input, cv::Mat& output){
 
 }
 
+/**
+ * Se aplica el modelo de substracción de fondo usando selección de píxeles para la actualización.
+ *
+ * @param input Fotograma, del vídeo, que se va a manipular
+ * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
+ */
 void MediaMovil::processWithSelectionPixel(cv::Mat& input, cv::Mat& output){
 	cv::Mat gray;
 	cv::Mat backImage;
