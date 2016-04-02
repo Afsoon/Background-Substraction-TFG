@@ -41,11 +41,8 @@ void MediaGaussiana::setSeleccionPixelesMode(bool state){
 }
 
 /**
- * La técnica que ha sido implementada ha sido el modelo mediante media gaussiana en escala de grises.
- *
- * Esta técnica sigue las siguientes formúlas matemáticas
- *
- * <<Incluir las formulas en Latex>>
+ * Si el usuario no ha modificado ningún parámetro, por defecto se realizará la substracción
+ * de fondo con selección de píxeles, en color, con un <<alpha>> de 0.05.
  *
  *
  * @param input Fotograma, del vídeo, que se va a manipular
@@ -57,7 +54,16 @@ void MediaGaussiana::process(cv::Mat& input, cv::Mat& output){
 	processMatrix(gray, output);
 }
 
-
+/**
+ * En el estado inicial, se inicializa las desviaciones típicas y la función de probabilidad de densidad
+ * y se devuelve una máscara negra.
+ *
+ * En los siguietnes estados, se calcula la máscara de primer plano con los valores calculados previamente y
+ * se pasa a la actualización.
+ *
+ * @param input Fotograma, del vídeo, que se va a manipular
+ * @param output Máscara del primer plano obtenido tras manipular el fotograma de entrada
+ */
 void MediaGaussiana::processMatrix(cv::Mat& input, cv::Mat& output){
 
 	mask_foreground = cv::Mat::zeros(input.rows, input.cols, CV_8UC1);
